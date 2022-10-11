@@ -18,16 +18,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SITE_URL = os.getenv('SITE_URL', 'http://localhost:8000')
 
-
-INSTALLED_APPS = (
+DJANGO_DEFAULT_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'jet',
     'django.contrib.admin',
-    # Third party apps
+)
+
+THIRD_PARTY_APPS = (
     'rest_framework',  # utilities for rest apis
     'rest_framework.authtoken',  # token authentication
     'django_filters',  # for filtering rest endpoints
@@ -36,7 +36,6 @@ INSTALLED_APPS = (
     'easy_thumbnails',  # image lib
     'social_django',  # social login
     'corsheaders',  # cors handling
-    'django_inlinecss',  # inline css in templates
     'django_summernote',  # text editor
     'django_celery_beat',  # task scheduler
     'djmoney',  # money object
@@ -46,7 +45,9 @@ INSTALLED_APPS = (
     'health_check.storage',
     'health_check.contrib.migrations',
     'health_check.contrib.celery_ping',  # requires celery
-    # Your apps
+)
+
+LOCAL_APPS = (
     'src.notifications',
     'src.users',
     'src.social',
@@ -56,6 +57,8 @@ INSTALLED_APPS = (
     # app must be placed somewhere after all the apps that are going to be generating activities
     # 'actstream',                  # activity stream
 )
+
+INSTALLED_APPS = DJANGO_DEFAULT_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 # https://docs.djangoproject.com/en/2.0/topics/http/middleware/
 MIDDLEWARE = (
@@ -234,7 +237,8 @@ AUTHENTICATION_BACKENDS = (
     'src.users.backends.EmailOrUsernameModelBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
-for key in ['GOOGLE_OAUTH2_KEY', 'GOOGLE_OAUTH2_SECRET', 'FACEBOOK_KEY', 'FACEBOOK_SECRET', 'TWITTER_KEY', 'TWITTER_SECRET']:
+for key in ['GOOGLE_OAUTH2_KEY', 'GOOGLE_OAUTH2_SECRET', 'FACEBOOK_KEY', 'FACEBOOK_SECRET', 'TWITTER_KEY',
+            'TWITTER_SECRET']:
     exec("SOCIAL_AUTH_{key} = os.environ.get('{key}', '')".format(key=key))
 
 # FB
@@ -293,7 +297,8 @@ THUMBNAIL_ALIASES = {
 # Django Rest Framework
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend', 'rest_framework.filters.OrderingFilter'],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend',
+                                'rest_framework.filters.OrderingFilter'],
     'PAGE_SIZE': int(os.getenv('DJANGO_PAGINATION_LIMIT', 18)),
     'DATETIME_FORMAT': '%Y-%m-%dT%H:%M:%S.%fZ',
     'DEFAULT_RENDERER_CLASSES': (
