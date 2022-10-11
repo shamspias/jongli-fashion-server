@@ -1,7 +1,8 @@
-# Jongli Fashion 
+# Django Rest Framework boilerplate Update
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
+This is boilerplate for starting fresh new DRF projects. It's built using [cookiecutter-django-rest](https://github.com/agconti/cookiecutter-django-rest).
 
 ## Highlights
 
