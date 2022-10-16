@@ -1,5 +1,5 @@
 {
-  "python.pythonPath": "env/bin/python3",
+  "python.pythonPath": "venv/bin/python3",
   "python.linting.pylintEnabled": false,
   "python.linting.enabled": true,
   "python.linting.cwd": "src",
