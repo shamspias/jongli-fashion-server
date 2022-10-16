@@ -1,8 +1,8 @@
-from celery import task
+from celery import shared_task
 from django.core.mail import EmailMultiAlternatives
 
 
-@task(name='SendEmailTask')
+@shared_task(name='SendEmailTask')
 def send_email_task(subject, to, default_from, email_html_message):
     msg = EmailMultiAlternatives(
         subject,
